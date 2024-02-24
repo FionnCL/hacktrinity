@@ -7,7 +7,7 @@ export default function Navbar(){
     return(
         <div className="navbar">
             <h1 className="navbar-logo">lunchtime.</h1>
-            <Login/>
+            <Login className="navbar-login"/>
         </div>
     );
 }

@@ -4,11 +4,17 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 1em 1.5em;
+}
+
+.navbar-login {
+    padding: 0;
+    margin: 0;
 }
 
 .navbar-logo {
     color: white;
-    padding: .5em;
+    letter-spacing: 4px;
     margin: 0;
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
