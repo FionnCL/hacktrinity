@@ -1,9 +1,14 @@
 import React from "react";
 
-export default function Home(){
+import Timetable from './Timetable.js';
+import Groups from './Groups.js';
+import './Home.css'
+
+export default function Home(props){
     return (
         <div>
-            <h1 className="">HOME PAGE!</h1>
+            <Groups/>
+            <Timetable uid={props.uid.userID}/>
         </div>
     );
 }

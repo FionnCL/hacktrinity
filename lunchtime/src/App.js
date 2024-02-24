@@ -9,7 +9,9 @@ import GoogleCalendar from './components/GoogleCalendar.js';
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
+  const [userID, setUserID] = useState(null);
 
+<<<<<<< HEAD
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -47,11 +49,30 @@ function App() {
       });
     });
   }, []); // The empty array ensures this effect runs once, similar to componentDidMount
+=======
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in
+      const uid = user.uid;
+      setUserID(uid);
+      setSignedIn(true);
+    } else {
+      // User is signed out
+      setSignedIn(false);
+      setUserID(null);
+    }
+>>>>>>> 43d1288 (My work innit)
 
   return (
     <div className="App">
+<<<<<<< HEAD
         <Navbar/>
         { signedIn ? <><Home/><GoogleCalendar/></> : <Landing/> }
+=======
+      <Navbar/>
+      { signedIn ? <Home uid={userID}/> : <Landing/> }
+>>>>>>> 43d1288 (My work innit)
     </div>
 );
 }
