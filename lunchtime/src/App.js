@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+import Navbar from './components/Navbar.js';
+import Home from './components/Home.js';
+import Landing from './components/Landing.js'
 import './App.css';
 
 function App() {
+  const [signedIn, setSignedIn] = useState(false);
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in
+      const uid = user.uid;
+      setSignedIn(true);
+    } else {
+      // User is signed out
+      setSignedIn(false);
+    }
+
+});
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar/>
+      { signedIn ? <Home/> : <Landing/> }
     </div>
   );
 }
