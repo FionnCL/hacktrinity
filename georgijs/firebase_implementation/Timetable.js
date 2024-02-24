@@ -78,3 +78,92 @@ fetchUserWeek('user1').then(weekData => {
         renderTimetable(weekData);
     }
 });
+
+
+// Function to fetch users in the user's group
+async function getUsersInGroup() {
+    const userRef = doc(db, "user", "user1"); // Assuming user1 is the current user
+    const userSnapshot = await getDoc(userRef);
+
+    if (userSnapshot.exists()) {
+        const groupIDs = userSnapshot.data().groups || [];
+        const usersInGroup = [];
+
+        // Iterate through groupIDs and fetch users in each group
+        for (const groupID of groupIDs) {
+            const groupRef = doc(db, "group", groupID);
+            const groupSnapshot = await getDoc(groupRef);
+
+            if (groupSnapshot.exists()) {
+                const groupData = groupSnapshot.data();
+                const groupUsers = groupData.users || [];
+
+                // Fetch data of each user in the group and push to usersInGroup array
+                for (const userID of groupUsers) {
+                    const userRef = doc(db, "user", userID);
+                    const userSnapshot = await getDoc(userRef);
+
+                    if (userSnapshot.exists()) {
+                        const userData = userSnapshot.data();
+                        usersInGroup.push(userData);
+                    }
+                }
+            }
+        }
+
+        return usersInGroup;
+    } else {
+        console.log("No such user document!");
+        return [];
+    }
+}
+
+// Example usage to print the result to console
+getUsersInGroup().then(users => {
+    console.log("Users in group:", users);
+}).catch(error => {
+    console.error("Error fetching users in group:", error);
+});
+
+// Add event listener to each cell for cell selection
+document.querySelectorAll('#timetableBody td').forEach(cell => {
+    cell.addEventListener('click', function() {
+        const hour = this.parentNode.firstElementChild.textContent.split(':')[0]; // Extract hour from the first column of the selected cell
+        const selectedDay = this.parentNode.firstElementChild.textContent.toLowerCase(); // Extract day from the first column of the selected cell
+        const selectedHour = parseInt(hour);
+
+        // Fetch users from the group
+        getUsersInGroup().then(users => {
+            // Filter users who are free in the selected hour
+            const freeUsers = users.filter(user => {
+                const userAvailability = user.week[selectedDay]?.find(slot => slot.hour === selectedHour);
+                return userAvailability && userAvailability.status === 1; // Assuming status 1 means free
+            });
+
+            // Display the list of free users in a modal
+            displayFreeUsers(freeUsers);
+        }).catch(error => {
+            console.error("Error fetching users in group:", error);
+        });
+    });
+});
+
+
+// Function to display free users in a modal
+function displayFreeUsers(users) {
+    const freeUsersList = document.getElementById('freeUsersList');
+    freeUsersList.innerHTML = ''; // Clear existing content
+
+    if (users.length > 0) {
+        users.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = user.name; // Assuming each user object has a 'name' property
+            freeUsersList.appendChild(li);
+        });
+
+        // Open the modal
+        openModal();
+    } else {
+        alert("No users are free in this hour.");
+    }
+}
