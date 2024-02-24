@@ -1,0 +1,23 @@
+{
+  "name": "lunchtime",
+  "version": "1.0.0",
+  "description": "Lunchtime test",
+  "main": "Timetable.js",
+  "scripts": {
+    "start": "parcel timetable.html --port 8080",
+    "build": "parcel build timetable.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^10.8.0",
+    "firebase-admin": "^12.0.0",
+    "http-server": "^14.1.1"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "parcel": "^2.11.0",
+    "process": "^0.11.10"
+  }
+}

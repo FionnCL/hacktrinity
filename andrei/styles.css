@@ -1,0 +1,60 @@
+/* Importing Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+/* Table styling */
+table {
+    border-collapse: separate;
+    border-spacing: 30px 25px;
+    width: 100%;
+    font-family: "Inter", sans-serif; /* Set font-family to Inter */
+    background-color: #fcf8e5; /* Background color for the entire table */
+}
+
+/* Cell styling */
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px;
+    width: 100px;
+    height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Header cell styling */
+th {
+    font-weight: 400; /* Set font weight to lighter */
+    /* Removed background-color property */
+}
+
+/* Styling for the first row cells */
+th:first-child,
+td:first-child {
+    padding: 8px;
+    width: 80px;
+    height: 40px;
+    min-width: initial;
+}
+
+/* Styling for true cells */
+td.true {
+    background-color: #aef177;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.75);
+}
+
+/* Styling for false cells */
+td.false {
+    background-color: #eb5851;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.75);
+}
+
+/* Styling for yellow cells */
+td.yellow {
+    background-color: #fceb60;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.75);
+}
+
+/* Align time text to the right */
+.time-column {
+    text-align: right;
+}
