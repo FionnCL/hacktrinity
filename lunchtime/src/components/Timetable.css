@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+.home {
+    display: flex;
+    flex-direction: row;
+}
+
+.timetable {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+
+.times {
+    display: grid;
+    margin: 75px 0 0 0;
+}
+
+.cell, .days {
+    color: white;
+    width: 200px;
+    height: 50px;
+    margin: 4px;
+    border-radius: .5em;
+}
+
+.time {
+    color: white;
+    width: 100px;
+    height: 25px;
+    margin: 0;
+}
+
+.green {
+    background-color: rgb(87, 202, 87);
+}
+
+.red {
+    background-color: rgb(216, 93, 93);
+}

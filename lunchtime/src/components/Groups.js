@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { db } from './config.js';
-import { doc, getDocs, getDoc, collection, query, where } from 'firebase/firestore';
+import { getDocs, collection, query } from 'firebase/firestore';
 
-import Group from './Group.js';
+import Timetable from './Timetable.js';
 import './Groups.css';
 
 async function fetchData(uid){
@@ -19,7 +19,7 @@ async function fetchData(uid){
 
 export default function Groups(props){
     const [userData, setUserData] = useState([]);
-    const [currentGroup, setCurrentGroup] = useState([]);
+    const [currentGroup, setCurrentGroup] = useState('');
 
     useEffect(() => {
         async function helper(){
@@ -27,7 +27,7 @@ export default function Groups(props){
             console.log(userData);
         }
         helper();
-    });
+    },[]);
     
     // render all groups on sidebar.
     // implement :hover here.
@@ -41,12 +41,12 @@ export default function Groups(props){
     });
 
     return(
-        <div>
+        <div className="home">
             <div className="groups">
                 <h2 className="section-title">Your Groups</h2>
                 {groups}
             </div>
-            <h1> TIMETABLE GOES HERE</h1>
+            { currentGroup ? <Timetable users={currentGroup}/> : <p className='no-groups'>No group selected.</p>}
         </div>
     );
 }

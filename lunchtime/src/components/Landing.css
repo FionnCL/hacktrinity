@@ -22,22 +22,15 @@
     height: 20%;
 }
 
-.landing-desc {
-    font-size: smaller;
-
-	display: grid;
-	align-items: center;
-}
-
 .landing-text {
     padding: 2em;
     text-align: left;
 }
 
 h1, h2 {
-    letter-spacing: -8px;
+    letter-spacing: 2px;
     color: white;
-    margin: 0;
+    margin: 0 .5em;
 }
 
 .h1-1 {
@@ -47,11 +40,13 @@ h1, h2 {
 .h1-2 {
     font-size: 12rem;
     background: -webkit-linear-gradient(10deg, #00eeff, #ffb310);
+    padding-left: .5rem;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .h2-1 {
+    padding-left: 8rem;
     font-size: 6rem;
     font-weight: bold;
 }
