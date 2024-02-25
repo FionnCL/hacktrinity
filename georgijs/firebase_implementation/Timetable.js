@@ -60,7 +60,7 @@ function renderTimetable(weekData, groupId) {
             // Find the slot for the current hour
             const slot = weekData[day]?.find(s => s.hour.toString() === hour);
             if (slot && slot.status === 1) {
-                statusCell.textContent = slot.status === 1 ? 'Free' : 'Busy';
+                statusCell.textContent = slot.status === 1 ? '🥬 Free' : 'Busy';
                 statusCell.classList.add(slot.status === 1 ? 'bg-green-200' : 'bg-red-200');
                 statusCell.addEventListener('click', async () => {
                     const freeUsers = await fetchUsersFreeAtHour(groupId, day, parseInt(hour));
@@ -205,7 +205,8 @@ async function fetchAndDisplayUserGroups(userID) {
 }
 
 // Call this function on page load
-fetchAndDisplayUserGroups('user1'); // Replace 'user1' with the actual user ID
+fetchAndDisplayUserGroups('user1');
+
 
 async function renderGroupTimetable(groupId) {
     // Fetch the heatmap data for the group
@@ -235,7 +236,12 @@ async function renderGroupTimetable(groupId) {
             const slot = heatmapData.find(s => s.day === day && s.hour.toString() === hour);
 
             if (slot) {
-                statusCell.textContent = slot.usersFree.length > 0 ? 'Free' : 'Busy';
+                // Check frequency to determine if the slot is 'Free' or 'Busy'
+                if (slot.frequency === 'bg-green-200' || slot.frequency === 'bg-yellow-200') {
+                    statusCell.textContent = '🍅 Free'; // Use tomato emoji for Free
+                } else {
+                    statusCell.textContent = '🥬 Busy'; // Use lettuce emoji for Busy
+                }
                 statusCell.classList.add(slot.frequency); // Add color class based on frequency
                 statusCell.addEventListener('click', () => showModal(slot.usersFree));
             } else {
@@ -250,5 +256,56 @@ async function renderGroupTimetable(groupId) {
 }
 
 
+
 // Example of a group item click event in the sidebar
 groupItem.onclick = () => renderGroupTimetable(groupID);
+
+async function createSandwichTimetable(groupId) {
+    // Fetch the heatmap data for the group
+    const heatmapData = await fetchUsersFreeAtWeek(groupId);
+
+    // Create a new div element for the timetable
+    const timetableDiv = document.createElement('div');
+    timetableDiv.classList.add('sandwich-timetable'); // Add a class for styling
+
+    // Create a table element
+    const table = document.createElement('table');
+    table.classList.add('w-full'); // Example class, adjust as needed
+
+    const hours = ['9', '10', '11', '12', '13', '14', '15', '16', '17']; // 9AM to 5PM
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+
+    hours.forEach(hour => {
+        const row = document.createElement('tr');
+
+        // Create and append hour cell
+        const hourCell = document.createElement('td');
+        hourCell.textContent = `${hour}:00`;
+        hourCell.classList.add('px-4', 'py-2');
+        row.appendChild(hourCell);
+
+        days.forEach(day => {
+            const statusCell = document.createElement('td');
+            statusCell.classList.add('px-4', 'py-2');
+
+            // Find the slot for the current day and hour
+            const slot = heatmapData.find(s => s.day === day && s.hour.toString() === hour);
+
+            if (slot) {
+                statusCell.textContent = slot.usersFree.length > 0 ? '🥬 Free' : 'Busy';
+                statusCell.classList.add(slot.frequency); // Add color class based on frequency
+                statusCell.addEventListener('click', () => showModal(slot.usersFree));
+            } else {
+                statusCell.textContent = '-';
+            }
+
+            row.appendChild(statusCell);
+        });
+
+        table.appendChild(row);
+    });
+
+    timetableDiv.appendChild(table);
+    return timetableDiv;
+}
+
