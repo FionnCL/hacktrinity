@@ -23,6 +23,16 @@
 }
 
 .group:hover {
+    animation: 1s group-hover;
+    background-color: #fca62b;
+    transition-duration: 0.5s;
+    color: white;
+}
+
+.group:active {
+    background-color: #ffb036;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
     animation: 4s group-hover;
 }
 
@@ -49,7 +59,7 @@
 
 .add {
     width: 70px;
-    transform: translate(-570px, 113px);
+    transform: translate(-650px, 113px);
 }
 
 @keyframes group-hover {

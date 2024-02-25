@@ -79,7 +79,7 @@ h1, h2, h3 {
     background-image: radial-gradient(circle at center, #ff9100 0%, #F7DA74 70%);
 } 
 
-.timetable{
+.timetable-2{
     width: 800px;
     position:sticky; /* Relative positioning */
     margin-top: 300px; /* Move the image 10 pixels down */

@@ -15,8 +15,8 @@ export default function Landing(){
             <div className="circle"></div>
             <div className="circle-2"></div>
             <div className="timetable-lowtext">
-                <div className="timetable">
-                    <img src={timetable} alt="timetable" className="timetable"/>
+                <div className="timetable-2">
+                    <img src={timetable} alt="timetable" className="timetable-2"/>
                 </div>
                 <div className="landing-text-low">
                     <h1 className="h1-3">How It Works:</h1>
