@@ -22,7 +22,6 @@ const firebaseConfig = {
   measurementId: "G-3ESQP5FJG7"
 };
 
-
 initializeApp(firebaseConfig);
 const db = getFirestore();
 
@@ -193,12 +192,12 @@ async function fetchAndDisplayUserGroups(userID) {
         groupListElement.innerHTML = ''; // Clear existing groups
 
         userGroups.forEach(groupID => {
-            const groupItem = document.createElement('li');
+            const groupItem = document.createElement('div');
             groupItem.textContent = groupID;
-            groupItem.classList.add('cursor-pointer', 'hover:text-blue-600');
+            groupItem.classList.add('group-item', 'cursor-pointer', 'hover:text-blue-600');
             groupItem.onclick = () => renderGroupTimetable(groupID);
             groupListElement.appendChild(groupItem);
-        });
+        });    
     } else {
         console.log("No such user document!");
     }
