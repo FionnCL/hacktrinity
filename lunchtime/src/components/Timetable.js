@@ -44,8 +44,12 @@ export default function Timetable(props){
         return <p className='days'>{elem}</p>;
     });
 
-    const cells = finalTable.map((elem) => {
-        return elem ? <div className='cell green'></div> : <div className='cell red'></div>;
+    // groupUsers[i]'s timetable = finalTable[i];
+    //
+    const cells = finalTable.map((elem, index) => {
+        return (elem ? <div className='cell green'><p className="cell-text">All free!</p></div> : <div className='cell red'> { userTimetables.map((tt, userIndex) => {
+             return !tt.timetable[index] ? "" : <p className="cell-text">{groupUsers[userIndex]}</p>; })
+        }</div>)
     });
 
     return(
