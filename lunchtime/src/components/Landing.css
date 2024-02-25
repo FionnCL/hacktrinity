@@ -17,11 +17,6 @@
     padding: 0;
 }
 
-.landing-image {
-    width: 25%;
-    height: 20%;
-}
-
 .landing-desc {
     font-size: smaller;
 
@@ -30,28 +25,97 @@
 }
 
 .landing-text {
+    position:absolute;
     padding: 2em;
     text-align: left;
 }
 
-h1, h2 {
+h1, h2, h3 {
     letter-spacing: -8px;
-    color: white;
+    color: #353535;
     margin: 0;
 }
 
 .h1-1 {
-    font-size: 8rem;
+    font-size: 6rem;
+    letter-spacing: 1px;
+    margin-top: 110px;
+    text-shadow: 1px 1px 1px rgba(72, 72, 72, 0.6);
 }
 
 .h1-2 {
-    font-size: 12rem;
-    background: -webkit-linear-gradient(10deg, #00eeff, #ffb310);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 6rem;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px rgba(72, 72, 72, 0.6);
 }
 
 .h2-1 {
-    font-size: 6rem;
+    font-size: 2rem;
     font-weight: bold;
+    letter-spacing: 1px;
 }
+
+.circle {
+    width: 800px;
+    height: 800px;
+    background-color: transparent; /* Dark purple background color */
+    border-radius: 50%; /* Makes the element perfectly round */
+    position:absolute;
+    z-index:-5;
+    top: -220px; /* Adjust top position as needed */
+    right: -220px; /* Adjust right position as needed */
+    background-image: radial-gradient(circle at center, #ff9100 0%, #F7DA74 70%);
+}  
+
+.circle-2 {
+    width: 800px;
+    height: 800px;
+    background-color: transparent; /* Dark purple background color */
+    border-radius: 50%; /* Makes the element perfectly round */
+    position:absolute;
+    z-index:-5;
+    bottom: -250px; /* Adjust top position as needed */
+    left: -220px; /* Adjust right position as needed */
+    background-image: radial-gradient(circle at center, #ff9100 0%, #F7DA74 70%);
+} 
+
+.timetable{
+    width: 575px;
+    position:relative; /* Relative positioning */
+    top: 350px; /* Move the image 10 pixels down */
+    right: -35px; /* Move the image 20 pixels to the right */
+    padding-bottom: 70px;
+}
+
+.landing-text-low {
+    padding-bottom: 0px; /* Move text down */
+    text-align: left;
+}
+
+.h1-3 {
+    font-size: 5rem;
+    letter-spacing: 1px;
+    margin-top: 700px;
+    text-shadow: 1px 1px 1px rgba(72, 72, 72, 0.6);
+    transform: translate(140px, 5px);
+}
+
+.h3-1 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transform: translate(140px, 20px);
+    max-width: 600px;
+}
+
+.circle-3 {
+    width: 800px;
+    height: 800px;
+    background-color: transparent; /* Dark purple background color */
+    border-radius: 50%; /* Makes the element perfectly round */
+    position:absolute;
+    z-index:-5;
+    bottom: -650px; /* Adjust top position as needed */
+    right: -220px; /* Adjust right position as needed */
+    background-image: radial-gradient(circle at center, #ff9100 0%, #F7DA74 70%);
+} 

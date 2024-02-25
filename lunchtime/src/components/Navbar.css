@@ -12,9 +12,21 @@
     margin: 0;
 }
 
+.sandwhich {
+    width: 60px;
+    margin-right: 0.6rem;
+    margin-top: -0.25rem;
+}
+
+.logo-img {
+    display: flex;
+    flex-direction: row;
+}
+
 .navbar-logo {
-    color: white;
-    letter-spacing: 4px;
+    color: #353535;
+    letter-spacing: 1px;
+    align-items: left;
     margin: 0;
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
