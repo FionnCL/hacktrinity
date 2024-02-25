@@ -1,9 +1,12 @@
 import React from "react";
 
-export default function Home(){
+import Groups from './Groups.js';
+import './Home.css'
+
+export default function Home(props){
     return (
         <div>
-            <h1 className="">HOME PAGE!</h1>
+            <Groups/>
         </div>
     );
 }

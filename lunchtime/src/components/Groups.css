@@ -1,0 +1,57 @@
+.home {
+    display: flex;
+    flex-direction: row;
+}
+
+.groups {
+    margin: 0 2em;
+    border-color: #ffffff;
+    border-style: solid;
+    border-width: 0 2px 0 0;
+    width: 30%;
+}
+
+.group {
+    background-color: #181818;
+    padding: 1px 8px;
+    margin: 8px 0;
+    text-align: left;
+    border-color: white;
+    border-width: 2px;
+    width: 90%;
+}
+
+.group:hover {
+    animation: 1s group-hover;
+}
+
+.no-groups {
+    font-family: "Inter", sans-serif;
+    color: white;
+}
+
+.group-text {
+    font-family: "Inter", sans-serif;
+    color: #ffffff;
+}
+
+.section-title {
+    letter-spacing: -2px;
+    color: white;
+    font-family: "Inter", sans-serif;
+    text-align: left;
+}
+
+@keyframes group-hover {
+    0% {
+
+    }
+
+    50% {
+        box-shadow: 0 0 8px 1px #ffffff;
+    }
+
+    100% {
+
+    }
+}
