@@ -46,6 +46,21 @@
     </style>
 </head>
 <body class="bg-gray-100 p-5">
+    <div class="flex">
+        <!-- Sidebar for Groups -->
+        <div id="sidebar" class="w-1/4 p-4 bg-gray-200">
+            <h2 class="font-bold text-lg mb-4">My Groups</h2>
+            <ul id="groupList" class="list-disc list-inside">
+                <!-- Group items will be added here dynamically -->
+            </ul>
+        </div>
+
+        <!-- Main content area -->
+        <div class="w-3/4 p-4">
+            <!-- Your existing timetable structure here -->
+        </div>
+    </div>
+
     <div class="container mx-auto p-4 bg-white shadow-lg rounded-lg">
         <h1 class="text-2xl font-bold mb-5">Weekly Timetable</h1>
         <table class="table-auto w-full">
@@ -82,11 +97,6 @@
 
         // Get the <span> element that closes the modal
         const span = document.getElementsByClassName('close')[0];
-
-        // When the user clicks on the button, open the modal
-        function openModal() {
-            modal.style.display = 'block';
-        }
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {

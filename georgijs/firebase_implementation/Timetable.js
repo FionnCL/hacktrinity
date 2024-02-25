@@ -39,7 +39,7 @@ async function fetchUserWeek(userID) {
 }
 
 
-function renderTimetable(weekData) {
+function renderTimetable(weekData, groupId) {
     const timetableBody = document.getElementById('timetableBody');
     timetableBody.innerHTML = ''; // Clear existing content
 
@@ -59,9 +59,13 @@ function renderTimetable(weekData) {
             statusCell.classList.add('px-4', 'py-2');
             // Find the slot for the current hour
             const slot = weekData[day]?.find(s => s.hour.toString() === hour);
-            if (slot) {
+            if (slot && slot.status === 1) {
                 statusCell.textContent = slot.status === 1 ? 'Free' : 'Busy';
                 statusCell.classList.add(slot.status === 1 ? 'bg-green-200' : 'bg-red-200');
+                statusCell.addEventListener('click', async () => {
+                    const freeUsers = await fetchUsersFreeAtHour(groupId, day, parseInt(hour));
+                    showModal(freeUsers);
+                });
             } else {
                 statusCell.textContent = '-';
             }
@@ -75,95 +79,176 @@ function renderTimetable(weekData) {
 // Example usage
 fetchUserWeek('user1').then(weekData => {
     if (weekData) {
-        renderTimetable(weekData);
+        const groupId = 'group9'
+        renderTimetable(weekData, groupId);
     }
 });
 
+async function fetchGroupData(groupID) {
+    const groupRef = doc(db, "group", groupID);
+    const groupSnapshot = await getDoc(groupRef);
 
-// Function to fetch users in the user's group
-async function getUsersInGroup() {
-    const userRef = doc(db, "user", "user1"); // Assuming user1 is the current user
-    const userSnapshot = await getDoc(userRef);
-
-    if (userSnapshot.exists()) {
-        const groupIDs = userSnapshot.data().groups || [];
-        const usersInGroup = [];
-
-        // Iterate through groupIDs and fetch users in each group
-        for (const groupID of groupIDs) {
-            const groupRef = doc(db, "group", groupID);
-            const groupSnapshot = await getDoc(groupRef);
-
-            if (groupSnapshot.exists()) {
-                const groupData = groupSnapshot.data();
-                const groupUsers = groupData.users || [];
-
-                // Fetch data of each user in the group and push to usersInGroup array
-                for (const userID of groupUsers) {
-                    const userRef = doc(db, "user", userID);
-                    const userSnapshot = await getDoc(userRef);
-
-                    if (userSnapshot.exists()) {
-                        const userData = userSnapshot.data();
-                        usersInGroup.push(userData);
-                    }
-                }
-            }
-        }
-
-        return usersInGroup;
+    if (groupSnapshot.exists()) {
+        return groupSnapshot.data().users || [];
     } else {
-        console.log("No such user document!");
+        console.log("No such group document!");
         return [];
     }
 }
 
-// Example usage to print the result to console
-getUsersInGroup().then(users => {
-    console.log("Users in group:", users);
-}).catch(error => {
-    console.error("Error fetching users in group:", error);
-});
+async function fetchUsersFreeAtHour(groupId, day, hour) {
+    const userIds = await fetchGroupData(groupId);
+    let freeUsers = [];
 
-// Add event listener to each cell for cell selection
-document.querySelectorAll('#timetableBody td').forEach(cell => {
-    cell.addEventListener('click', function() {
-        const hour = this.parentNode.firstElementChild.textContent.split(':')[0]; // Extract hour from the first column of the selected cell
-        const selectedDay = this.parentNode.firstElementChild.textContent.toLowerCase(); // Extract day from the first column of the selected cell
-        const selectedHour = parseInt(hour);
+    for (const userId of userIds) {
+        const userRef = doc(db, "user", userId);
+        const userSnapshot = await getDoc(userRef);
 
-        // Fetch users from the group
-        getUsersInGroup().then(users => {
-            // Filter users who are free in the selected hour
-            const freeUsers = users.filter(user => {
-                const userAvailability = user.week[selectedDay]?.find(slot => slot.hour === selectedHour);
-                return userAvailability && userAvailability.status === 1; // Assuming status 1 means free
-            });
+        if (userSnapshot.exists()) {
+            const week = userSnapshot.data().week || {};
+            const slot = week[day]?.find(s => s.hour === hour && s.status === 1);
+            if (slot) {
+                freeUsers.push(userSnapshot.data().name);
+            }
+        }
+    }
+    console.log(freeUsers)
+    return freeUsers;
+}
 
-            // Display the list of free users in a modal
-            displayFreeUsers(freeUsers);
-        }).catch(error => {
-            console.error("Error fetching users in group:", error);
-        });
-    });
-});
-
-
-// Function to display free users in a modal
-function displayFreeUsers(users) {
+async function openModal(day, hour, groupID) {
     const freeUsersList = document.getElementById('freeUsersList');
     freeUsersList.innerHTML = ''; // Clear existing content
 
-    if (users.length > 0) {
-        users.forEach(user => {
-            const li = document.createElement('li');
-            li.textContent = user.name; // Assuming each user object has a 'name' property
-            freeUsersList.appendChild(li);
-        });
+    const usersInGroup = await fetchGroupData(groupID);
 
-        // Open the modal
-        openModal();
+    // Fetch each user's week data and check if they are free at the selected time
+    for (const userID of usersInGroup) {
+        const userWeekData = await fetchUserWeek(userID);
+        if (userWeekData && userWeekData[day].some(slot => slot.hour.toString() === hour && slot.status === 1)) {
+            const li = document.createElement('li');
+            li.textContent = `User ${userID} is free`;
+            freeUsersList.appendChild(li);
+        }
+    }
+
+    modal.style.display = 'block'; // Show the modal
+}
+
+function showModal(freeUsers) {
+    const modal = document.getElementById('myModal');
+    const freeUsersList = document.getElementById('freeUsersList');
+
+    // Clear existing content in the modal
+    freeUsersList.innerHTML = '';
+
+    // Populate the modal with the list of free users
+    freeUsers.forEach(user => {
+        const listItem = document.createElement('li');
+        listItem.textContent = user;
+        freeUsersList.appendChild(listItem);
+    });
+
+    // Display the modal
+    modal.style.display = 'block';
+}
+
+async function fetchUsersFreeAtWeek(groupId) {
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    const hours = [9, 10, 11, 12, 13, 14, 15, 16, 17]; // 9AM to 5PM
+    const weekAvailability = [];
+
+    const usersInGroup = await fetchGroupData(groupId);
+    const totalUsers = usersInGroup.length;
+
+    for (const day of days) {
+        for (const hour of hours) {
+            const freeUsers = await fetchUsersFreeAtHour(groupId, day, hour);
+            const frequency = freeUsers.length / totalUsers;
+
+            // Adjusted color classification
+            let colorClass;
+            if (frequency > 0.9) {
+                colorClass = 'bg-green-200'; // 90%+ availability
+            } else if (frequency > 0.5) {
+                colorClass = 'bg-yellow-200'; // 50-90% availability
+            } else {
+                colorClass = 'bg-red-200'; // <50% availability
+            }
+
+            weekAvailability.push({ day, hour, usersFree: freeUsers, frequency: colorClass });
+        }
+    }
+
+    return weekAvailability;
+}
+
+async function fetchAndDisplayUserGroups(userID) {
+    const userRef = doc(db, "user", userID);
+    const userSnapshot = await getDoc(userRef);
+
+    if (userSnapshot.exists()) {
+        const userGroups = userSnapshot.data().groups || [];
+        const groupListElement = document.getElementById('groupList');
+        groupListElement.innerHTML = ''; // Clear existing groups
+
+        userGroups.forEach(groupID => {
+            const groupItem = document.createElement('li');
+            groupItem.textContent = groupID;
+            groupItem.classList.add('cursor-pointer', 'hover:text-blue-600');
+            groupItem.onclick = () => renderGroupTimetable(groupID);
+            groupListElement.appendChild(groupItem);
+        });
     } else {
-        alert("No users are free in this hour.");
+        console.log("No such user document!");
     }
 }
+
+// Call this function on page load
+fetchAndDisplayUserGroups('user1'); // Replace 'user1' with the actual user ID
+
+async function renderGroupTimetable(groupId) {
+    // Fetch the heatmap data for the group
+    const heatmapData = await fetchUsersFreeAtWeek(groupId);
+
+    // Clear the existing timetable
+    const timetableBody = document.getElementById('timetableBody');
+    timetableBody.innerHTML = '';
+
+    const hours = ['9', '10', '11', '12', '13', '14', '15', '16', '17']; // 9AM to 5PM
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+
+    hours.forEach(hour => {
+        const row = document.createElement('tr');
+
+        // Create and append hour cell
+        const hourCell = document.createElement('td');
+        hourCell.textContent = `${hour}:00`;
+        hourCell.classList.add('px-4', 'py-2');
+        row.appendChild(hourCell);
+
+        days.forEach(day => {
+            const statusCell = document.createElement('td');
+            statusCell.classList.add('px-4', 'py-2');
+
+            // Find the slot for the current day and hour
+            const slot = heatmapData.find(s => s.day === day && s.hour.toString() === hour);
+
+            if (slot) {
+                statusCell.textContent = slot.usersFree.length > 0 ? 'Free' : 'Busy';
+                statusCell.classList.add(slot.frequency); // Add color class based on frequency
+                statusCell.addEventListener('click', () => showModal(slot.usersFree));
+            } else {
+                statusCell.textContent = '-';
+            }
+
+            row.appendChild(statusCell);
+        });
+
+        timetableBody.appendChild(row);
+    });
+}
+
+
+// Example of a group item click event in the sidebar
+groupItem.onclick = () => renderGroupTimetable(groupID);
