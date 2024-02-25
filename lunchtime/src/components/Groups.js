@@ -34,8 +34,8 @@ export default function Groups(props){
     const groups = userData?.map((elem) => {
         return(
             <div onClick={() => setCurrentGroup(elem.users)} className="group">
-                <p className="group-text">GroupID: {elem.groupID}</p>
-                <p className="group-text">Users in group: {elem.users}</p>
+                <p className="group-text">Group: {elem.groupID}</p>
+                <p className="group-text">Users in group: {elem.users.toString()}</p>
             </div>
         );
     });
