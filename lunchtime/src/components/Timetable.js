@@ -25,7 +25,6 @@ async function getTimetables(groupUsers){
 export default function Timetable(props){
     const [userTimetables, setUserTimetables] = useState([]);
 
-    //const allNames = ["Alice", "Bob", "Charlie", "David"];
     const groupUsers = props.users;
 
     useEffect(() => {
@@ -75,13 +74,10 @@ function compareTables(tables){
         true, true, true, true, true
     ];
 
-    console.log("TABLES:", tables);
     for(let i = 0; i < tables.length; i++){
         let curr = tables[i].timetable;
-        console.log("CURR:", curr);
         for(let j = 0; j < curr.length; j++){
             if(!curr[j]){
-                console.log("FALSE");
                 baseTimetable[j] = false;
             }
         }
