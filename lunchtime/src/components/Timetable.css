@@ -16,11 +16,20 @@
 }
 
 .cell, .days {
-    color: rgb(38, 38, 38);
     width: 200px;
     height: 50px;
     margin: 4px;
     border-radius: .5em;
+}
+
+.cell-text {
+    line-height: 12px;
+    height: 12px;
+}
+
+.cell:hover {
+    animation: hover-cell 1s;
+    animation-fill-mode: forwards;
 }
 
 .time {
@@ -31,9 +40,19 @@
 }
 
 .green {
+    color: rgb(87, 202, 87);
     background-color: rgb(87, 202, 87);
 }
 
 .red {
+    color: rgb(216,93,93);
     background-color: rgb(216, 93, 93);
+}
+
+@keyframes hover-cell {
+    from {
+    }
+    to {
+        color: #000000
+    }
 }
