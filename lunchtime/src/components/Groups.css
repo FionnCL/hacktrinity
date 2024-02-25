@@ -53,7 +53,7 @@
     }
 
     50% {
-        box-shadow: 0 0 8px 1px #ffffff;
+        box-shadow: 0 0 8px 1px rgb(42, 42, 42);
     }
 
     100% {
