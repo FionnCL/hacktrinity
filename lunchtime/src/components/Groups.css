@@ -5,20 +5,21 @@
 
 .groups {
     margin: 0 2em;
-    border-color: #ffffff;
+    border-color: rgb(42, 42, 42);
     border-style: solid;
     border-width: 0 2px 0 0;
     width: 30%;
 }
 
 .group {
-    background-color: #181818;
+    background-color: #ff9100;
     padding: 1px 8px;
     margin: 8px 0;
     text-align: left;
-    border-color: white;
+    border-color: rgb(42, 42, 42);
     border-width: 2px;
     width: 90%;
+    border-radius: 1rem;
 }
 
 .group:hover {
@@ -32,13 +33,17 @@
 
 .group-text {
     font-family: "Inter", sans-serif;
-    color: #ffffff;
+    color: rgb(42, 42, 42);
 }
 
 .section-title {
-    letter-spacing: -2px;
-    color: white;
+    letter-spacing: 0.25px;
+    color: rgb(42, 42, 42);
     font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:"slnt" 0;
     text-align: left;
 }
 
