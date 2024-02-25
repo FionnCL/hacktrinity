@@ -10,19 +10,19 @@
     display: grid;
     grid-template-columns: auto auto auto auto auto;
     position: flex;
-    margin-bottom: -35%;
+    margin-bottom: 5%;
 }
 
 .times {
     display: grid;
     text-align: right;
     margin-top: 7%;
-    margin-bottom: -5%;
+    margin-bottom: -2%;
 }
 
 .cell, .days {
-    transform: translate(50px, -300px);
-    width: 200px;
+    transform: translate(25px, 15px);
+    width: 150px;
     height: 50px;
     margin: 4px;
     border-radius: .5em;
