@@ -3,6 +3,7 @@
 .landing {
     display: flex;
     flex-direction: column;
+    overflow:hidden;
 }
 
 .timetable-lowtext {
@@ -80,10 +81,9 @@ h1, h2, h3 {
 
 .timetable{
     width: 575px;
-    position:relative; /* Relative positioning */
-    top: 350px; /* Move the image 10 pixels down */
+    position:sticky; /* Relative positioning */
+    margin-top: 325px; /* Move the image 10 pixels down */
     right: -35px; /* Move the image 20 pixels to the right */
-    padding-bottom: 70px;
 }
 
 .landing-text-low {
@@ -94,16 +94,16 @@ h1, h2, h3 {
 .h1-3 {
     font-size: 5rem;
     letter-spacing: 1px;
-    margin-top: 700px;
+    margin-top: 650px;
     text-shadow: 1px 1px 1px rgba(72, 72, 72, 0.6);
-    transform: translate(140px, 5px);
+    transform: translate(70px, 5px);
 }
 
 .h3-1 {
     font-size: 1.25rem;
     font-weight: bold;
     letter-spacing: 1px;
-    transform: translate(140px, 20px);
+    transform: translate(70px, 5px);
     max-width: 600px;
 }
 
