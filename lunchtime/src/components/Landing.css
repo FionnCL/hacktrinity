@@ -80,10 +80,12 @@ h1, h2, h3 {
 } 
 
 .timetable{
-    width: 575px;
+    width: 800px;
     position:sticky; /* Relative positioning */
-    margin-top: 325px; /* Move the image 10 pixels down */
+    margin-top: 300px; /* Move the image 10 pixels down */
     right: -35px; /* Move the image 20 pixels to the right */
+    border-radius:40px;
+    border-color: #ff9100;
 }
 
 .landing-text-low {
@@ -96,14 +98,14 @@ h1, h2, h3 {
     letter-spacing: 1px;
     margin-top: 650px;
     text-shadow: 1px 1px 1px rgba(72, 72, 72, 0.6);
-    transform: translate(70px, 5px);
+    transform: translate(-60px, 5px);
 }
 
 .h3-1 {
     font-size: 1.25rem;
     font-weight: bold;
     letter-spacing: 1px;
-    transform: translate(70px, 5px);
+    transform: translate(-60px, 5px);
     max-width: 600px;
 }
 

@@ -23,7 +23,7 @@
 }
 
 .group:hover {
-    animation: 1s group-hover;
+    animation: 4s group-hover;
 }
 
 .no-groups {
