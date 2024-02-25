@@ -4,6 +4,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Navbar from './components/Navbar.js';
 import Home from './components/Home.js';
 import Landing from './components/Landing.js'
+import Footer from "./components/Footer.js";
 import './App.css';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
     <div className="App">
         <Navbar/>
         { signedIn ? <Home/> : <Landing/> }
+        <Footer/>
     </div>
   );
 }
