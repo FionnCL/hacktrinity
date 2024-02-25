@@ -47,6 +47,11 @@
     text-align: left;
 }
 
+.add {
+    width: 70px;
+    transform: translate(-570px, 113px);
+}
+
 @keyframes group-hover {
     0% {
 

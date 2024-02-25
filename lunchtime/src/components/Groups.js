@@ -4,6 +4,7 @@ import { getDocs, collection, query } from 'firebase/firestore';
 
 import Timetable from './Timetable.js';
 import './Groups.css';
+import add from "./img/add.png";
 
 async function fetchData(uid){
     const q = query(collection(db, "group"));
@@ -47,6 +48,9 @@ export default function Groups(props){
                 {groups}
             </div>
             { currentGroup ? <Timetable users={currentGroup}/> : <p className='no-groups'>No group selected.</p>}
+            <div className="add">
+                    <img src={add} alt="add friends" className="add"/>
+            </div>
         </div>
     );
 }
