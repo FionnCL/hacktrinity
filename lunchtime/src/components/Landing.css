@@ -2,7 +2,13 @@
 
 .landing {
     display: flex;
+    flex-direction: column;
+}
+
+.timetable-lowtext {
+    display: flex;
     flex-direction: row;
+    margin: auto;
 }
 
 .col {
@@ -15,13 +21,6 @@
     width: 50%;
     margin: 0;
     padding: 0;
-}
-
-.landing-desc {
-    font-size: smaller;
-
-	display: grid;
-	align-items: center;
 }
 
 .landing-text {
